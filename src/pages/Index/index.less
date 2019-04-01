@@ -1,0 +1,110 @@
+.index-page {
+  background: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  header {
+    height     : 50px;
+    line-height: 50px;
+    margin     : 0 10%;
+    display    : flex;
+    color      : #fff;
+    position   : relative;
+    top        : 5px;
+
+    .logo {
+      font-family: "YouTube";
+      display    : block;
+      letter-spacing:  1px;
+      color      : #fff;
+      font-size  : 24px;
+      margin-top : 10px;
+
+      img {
+        height        : 28px;
+        width         : 35px;
+        vertical-align: sub;
+        margin-right  : 6px;
+      }
+    }
+
+    nav {
+      text-align: right;
+      flex      : 1;
+      font-size : 14px;
+
+      a {
+        color      : #fff;
+        margin-left: 20px;
+      }
+    }
+
+    .nav-item {
+      margin-left: 15px;
+    }
+  }
+
+  footer {
+    background : #3a444d;
+    color      : #fff;
+    font-size  : 14px;
+    width      : 100%;
+    padding    : 15px 0;
+    line-height: 1.5;
+    text-align : center;
+  }
+
+  .introduce {
+    color           : #fff;
+    flex: 1;
+    background-image: url("http://10.89.27.55:8089/static/images/index_bg.png");
+    text-align      : center;
+    z-index         : 99;
+
+    a:hover {
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-weight   : 300;
+      margin-bottom : 0.2em;
+      line-height   : 1.48;
+      text-align    : center;
+      color         : #fff;
+      font-size     : 34px;
+      letter-spacing: 2px;
+      padding       : 140px 0 10px;
+
+      span {
+        font-family   : "YouTube";
+        letter-spacing: 4px;
+      }
+    }
+
+    .btns {
+      padding-top: 110px;
+
+      a {
+        margin          : 0 20px;
+        background-color: #fff;
+        font-weight     : 500;
+        padding         : 8px 30px;
+        border          : none;
+        display         : inline-block;
+        border-radius   : 9999px;
+        color           : #4264fb;
+        transition      : background-color 0.125s,border-color 0.125s,color 0.125s;
+        z-index         : 99;
+
+        &:hover {
+          box-shadow: 0px 3px 5px #748ef4;
+        }
+      }
+
+      .apply-btn {
+        color: #999;
+      }
+    }
+  }
+}

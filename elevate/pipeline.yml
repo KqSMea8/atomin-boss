@@ -1,0 +1,19 @@
+name: master
+stages:
+    - name: compile
+      jobs:
+        - name: compile-job
+          tasks:
+            - name: compile-task
+              type: oe-compile
+              params:
+                osType: centos6.7
+                env: prod
+    - name: deploy-odin
+      trigger: manual
+      jobs:
+        - name: deploy-odin-job
+          tasks:
+            - name: deploy-odin
+              type: oe-deploy:odin
+

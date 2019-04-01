@@ -1,0 +1,20 @@
+name: duse-eye-app
+stages:
+    - name: Compile
+      jobs:
+        - name: compile-job
+          tasks:
+            - name: compile
+              type: oe-compile
+              params:
+                image: false
+                osType: centos7.2
+    - name: Deploy-test
+      trigger: manual
+      jobs:
+        - name: deploy-job
+          tasks:
+            - name: deploy-test
+              type: oe-deploy:odin
+              params:
+                env: test

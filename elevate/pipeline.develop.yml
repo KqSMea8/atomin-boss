@@ -1,0 +1,23 @@
+name: develop
+stages:
+    - name: compile
+      jobs:
+        - name: compile-job
+          tasks:
+            - name: compile-task
+              type: oe-compile
+              params:
+                image: true
+                osType: centos6.7
+                env: test
+    - name: deploy-container
+      jobs:
+        - name: deploy-container-job
+          tasks:
+            - name: deploy-container
+              type: oe-deploy:test
+              params:
+                port: 8080
+                replicas: 2
+                region: hl
+                domain: dueji.com

@@ -1,0 +1,12 @@
+.idea
+*.iml
+dist
+prod
+node_modules
+*.log*
+dist_bak
+pom.xml
+.vscode
+.DS_Store
+output/
+package-lock.json

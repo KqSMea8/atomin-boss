@@ -1,0 +1,16 @@
+reviewers: zhuzhennan
+owners: zhuzhennan
+strategy: default
+force: develop
+
+lint:
+  force: false
+  language:
+    javascript:
+      standard: eslint
+
+exclude:
+   -  "src/tests/.*\\.js$"
+   -  "static/.*\\.js$"
+
+onlyFastForwards: true
