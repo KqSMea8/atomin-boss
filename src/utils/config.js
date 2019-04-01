@@ -2,10 +2,10 @@ let origin = '';
 
 try {
   if (ENV === 'development') {
-    origin = 'http://192.168.133.60:18084/api';
+    origin = '/api/api';
   }
 } catch (err) {
-  origin = 'http://192.168.133.60:18084/api';
+  origin = 'http://192.168.133.60:8084/api';
 }
 
 const api =  {

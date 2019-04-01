@@ -6,19 +6,6 @@ function parseJSON(response) {
   return response.json();
 }
 
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '' + s4() + '' + s4() + '' + s4() + '' + s4() + s4() + s4();
-}
-
-function generatorTraceId() {
-  return (Date.now() + '_' + guid()).slice(0, 32);
-}
-
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -49,11 +36,6 @@ export default function request(url, options) {
     delete options.params;
   }
 
-  queryObj = Object.assign(queryObj, {
-    caller: 'duse-eye',
-    traceid: generatorTraceId()
-  });
-
   let paramsStr = '';
   let paramsArr = [];
   Object.keys(queryObj).forEach(function (key) {
@@ -66,8 +48,6 @@ export default function request(url, options) {
 
   if (url.indexOf('?') > -1) {
     url += '&' + paramsStr;
-  } else {
-    url += '?' + paramsStr;
   }
 
   if (!options.headers) {
@@ -78,6 +58,7 @@ export default function request(url, options) {
     .then(checkStatus)
     .then(parseJSON)
     .then(function(data) {
+      window.console.log(data);
       if(data.code === -100){
         Modal.warning({
           title: '权限错误',

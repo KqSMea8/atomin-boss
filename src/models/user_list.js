@@ -3,23 +3,17 @@ import httpApi from '../utils/httpApi';
 import {message} from 'antd';
 import {api} from '../utils/config';
 
-const getFormData = (data) => {
-  return Object.keys(data).map(key => {
-    return `${key}=${data[key]}`;
-  }).join('&');
-};
-
 export default {
   namespace: 'user_list',
   state: {
     listData: [],
-    showModal: false,
+    showModal: false
   },
   subscriptions: {
     setup({dispatch, history}) {
       history.listen(function (location) {
         const { pathname, query } = location;
-        let match = pathToRegexp('/userlist').exec(pathname);
+        let match = pathToRegexp('/user').exec(pathname);
         if (match) {
           dispatch({
             type: 'onPathChange',
@@ -41,9 +35,8 @@ export default {
         query
       });
     },
-    *getUserList({query = {}}, {call, put, select}){
-      let url = `${api.origin}/admin/users`;
-      const {errno, errmsg, data} = yield call(httpApi, url,{});
+    *getUserList(_, {call, put}){
+      const {errno, errmsg, data} = yield call(httpApi, `${api.origin}/admin/users`);
       if(!errno){
         yield put({
           type: 'mergeState',
@@ -54,7 +47,7 @@ export default {
       }else{
         message.warning(errmsg);
       }
-    },
+    }
   },
   reducers: {
     'editProp'(state, {key, value}) {

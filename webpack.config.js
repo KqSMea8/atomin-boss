@@ -14,6 +14,9 @@ module.exports = (env, argv) => {
   let Env = 'Production';
   let devtool;
   let plugins = [];
+  let devServer = {
+    host: '0.0.0.0'
+  };
 
   let optimization = {
     minimizer: [
@@ -43,6 +46,19 @@ module.exports = (env, argv) => {
     ];
     devtool = 'eval';
     babelPlugins.push('dva-hmr');
+    devServer.proxy = {
+      '/api': {
+        target: 'http://192.168.133.60:18084',
+        changeOrigin: true,
+        pathRewrite: { 
+          '^/api': ''
+        }
+      }
+    };
+  }else{
+    devServer = {
+      host: '0.0.0.0'
+    };
   }
 
   optimization.splitChunks = {
@@ -69,7 +85,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, './dist')
     },
     externals: {
-      '@antv/data-set': 'DataSet',
+      '@antv/data-set': 'DataSet'
     },
     stats: {
       entrypoints: false,
@@ -119,9 +135,7 @@ module.exports = (env, argv) => {
     performance: {
       hints: false
     },
-    devServer: {
-      host: '0.0.0.0'
-    },
+    devServer,
     plugins: [
       new MiniCssExtractPlugin({
         publicPath: '/',
