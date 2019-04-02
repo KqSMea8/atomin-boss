@@ -1,6 +1,5 @@
-import React from 'react';
 import fetch from 'dva-react-router-3/fetch';
-import {Modal} from 'antd';
+import { routerRedux } from 'dva/router';
 
 function parseJSON(response) {
   return response.json();
@@ -9,6 +8,12 @@ function parseJSON(response) {
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
+  }
+
+  if (response.status === 401 && window.location.pathname !== '/login') {
+    routerRedux.push({
+      pathname: '/login'
+    });
   }
 
   const error = new Error(response.statusText);
@@ -57,33 +62,6 @@ export default function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then(function(data) {
-      window.console.log(data);
-      if(data.code === -100){
-        Modal.warning({
-          title: '权限错误',
-          content: <span style={{color: 'red'}}>{'无访问接口权限'}</span>
-        });
-        return {};
-      }
-
-
-      if(data.code === 2) {
-        let url = data.data;
-        url += '&jumpto=' + encodeURIComponent(window.location.href);
-
-        setTimeout(function() {
-          window.location.href = url;
-        }, 1000);
-
-        return {
-          code: 2,
-          message: '请先登录'
-        };
-      }else {
-        return data;
-      }
-    })
     .catch(function() {
       return {
         code: 3,

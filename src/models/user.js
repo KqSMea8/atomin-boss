@@ -1,6 +1,5 @@
 import pathToRegexp from 'path-to-regexp';
 import httpApi from '../utils/httpApi';
-import {message} from 'antd';
 import {api} from '../utils/config';
 import qs from 'querystring';
 
@@ -36,28 +35,29 @@ export default {
         query
       });
     },
-    *login({loginForm}, {call}) {
-      const res = yield call(httpApi, `${api.origin}/login`, {
+    *login({loginForm}, {call, put}) {
+      const { username } = yield call(httpApi, `${api.origin}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: qs.stringify(loginForm)
       });
-      window.console.log(res);
+      if(username) {
+        yield put({
+          type: 'app/changeUrl',
+          pathname: '/user'
+        });
+      }
     },
     *getUserList(_, {call, put}){
-      const {errno, errmsg, data} = yield call(httpApi, `${api.origin}/admin/users`);
-      if(!errno){
-        yield put({
-          type: 'mergeState',
-          payload:{
-            listData: data || []
-          }
-        });
-      }else{
-        message.warning(errmsg);
-      }
+      const data = yield call(httpApi, `${api.origin}/admin/users`);
+      yield put({
+        type: 'mergeState',
+        payload:{
+          listData: data || []
+        }
+      });
     }
   },
   reducers: {

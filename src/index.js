@@ -38,20 +38,3 @@ app.router(require('./routes').default);
 
 // 5. Start
 app.start('#root');
-
-if (module.hot) {
-  module.hot.accept();
-}
-
-if(ENV === 'Production') {
-  let trace = document.createElement('script');
-  trace.src = 'https://mirror-api.intra.xiaojukeji.com/sdk/js/track.js';
-  trace.onload = function () {
-    let system = 'duse-eye';
-    let userKey = 'duse-eye_username';
-    window.taotieCommandQueue = window.taotieCommandQueue || [];
-    window.taotieCommandQueue.push({command:'setCookieUserName',parameter:  userKey});
-    window.taotieCommandQueue.push({command:'setCookieSystemNameForTaotie',parameter: system});
-  };
-  document.body.appendChild(trace);
-}

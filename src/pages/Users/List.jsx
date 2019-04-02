@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'dva';
 import {Link} from 'dva/router';
 import {Tabs, Button} from 'antd';
+import {UserListTable} from '../../components/User';
 import './index.less';
 
 const TabPane = Tabs.TabPane;
@@ -27,13 +28,14 @@ class UsersList extends React.Component {
         <Tabs
           className="top-tab"
           tabBarExtraContent={
-            <Link to="/activity/create">
+            <Link>
               <Button type="primary">add user</Button>
             </Link>
           }>
           <TabPane tab="User Management" key="list"></TabPane>
         </Tabs>
         <div className="list-content">
+          <UserListTable {...this.props}/>
         </div>
       </div>
     );
@@ -42,7 +44,7 @@ class UsersList extends React.Component {
 
 export default connect(function (state) {
   return {
-    ...state.user_list,
+    ...state.user,
     userInfo: state.app.userInfo
   };
 })(UsersList);
