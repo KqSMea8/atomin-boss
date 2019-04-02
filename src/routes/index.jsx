@@ -22,6 +22,11 @@ export default function Routers({history}) {
           }} />
         </Route>
       </Route>
+      <Route path="login" getComponent={(location, callback) => {
+        require.ensure([], function(require) {
+          callback(null, require('../pages/Login').default);
+        }, 'login_page');
+      }} />
       <Route path="*" component={NotFound} />
     </Router>
   </LocaleProvider>;

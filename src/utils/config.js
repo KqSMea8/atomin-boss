@@ -2,7 +2,7 @@ let origin = '';
 
 try {
   if (ENV === 'development') {
-    origin = '/api/api';
+    origin = 'http://192.168.133.60:18084/api';
   }
 } catch (err) {
   origin = 'http://192.168.133.60:8084/api';

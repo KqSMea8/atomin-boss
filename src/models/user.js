@@ -2,9 +2,10 @@ import pathToRegexp from 'path-to-regexp';
 import httpApi from '../utils/httpApi';
 import {message} from 'antd';
 import {api} from '../utils/config';
+import qs from 'querystring';
 
 export default {
-  namespace: 'user_list',
+  namespace: 'user',
   state: {
     listData: [],
     showModal: false
@@ -34,6 +35,16 @@ export default {
         type: 'getUserList',
         query
       });
+    },
+    *login({loginForm}, {call}) {
+      const res = yield call(httpApi, `${api.origin}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: qs.stringify(loginForm)
+      });
+      window.console.log(res);
     },
     *getUserList(_, {call, put}){
       const {errno, errmsg, data} = yield call(httpApi, `${api.origin}/admin/users`);

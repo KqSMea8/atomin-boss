@@ -121,7 +121,10 @@ module.exports = (env, argv) => {
           loader: 'less-loader',
           options: {
             sourceMap: true,
-            javascriptEnabled: true
+            javascriptEnabled: true,
+            modifyVars: {
+              'primary-color': '#6574cd'
+            }
           }
         }]
       }]

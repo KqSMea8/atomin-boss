@@ -1,18 +1,5 @@
 import { routerRedux } from 'dva/router';
-import { api } from '../utils/config';
-import httpApi from '../utils/httpApi';
 import ls from 'local-storage';
-
-const getQuery = (searchString) => {
-  let args = searchString.length > 0 ? searchString.split('&') : [];
-  let items = {};
-  for(let i = 0, length = args.length; i < length; i++ ){
-    let name = decodeURIComponent(args[i].split('=')[0]);
-    let item = decodeURIComponent(args[i].split('=')[1]);
-    items[name] = item;
-  }
-  return items;
-};
 
 export default {
   namespace: 'app',
@@ -29,13 +16,13 @@ export default {
     }
   },
   effects: {
-    *fetchBaseInfo(action, { put, call }) {
+    *fetchBaseInfo(action, { put }) {
       yield put({
         type: 'saveUserInfo',
         payload: {
           userInfo: {
             username: 'zhangsan',
-            displayName: 'test',
+            displayName: 'test'
           }
         }
       });
