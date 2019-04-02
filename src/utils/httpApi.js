@@ -1,5 +1,4 @@
 import fetch from 'dva-react-router-3/fetch';
-import { routerRedux } from 'dva/router';
 
 function parseJSON(response) {
   return response.json();
@@ -11,9 +10,7 @@ function checkStatus(response) {
   }
 
   if (response.status === 401 && window.location.pathname !== '/login') {
-    routerRedux.push({
-      pathname: '/login'
-    });
+    window.location.href = `${window.location.origin}/login`;
   }
 
   const error = new Error(response.statusText);

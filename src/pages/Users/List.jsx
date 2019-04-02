@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'dva';
-import {Link} from 'dva/router';
-import {Tabs, Button} from 'antd';
+import {Tabs, Button, Modal} from 'antd';
 import {UserListTable} from '../../components/User';
 import './index.less';
 
@@ -15,12 +14,31 @@ class UsersList extends React.Component {
       value
     });
   }
-  onCancelModal(){
+  modalTotalShow(value){
     this.props.dispatch({
-      type: 'activity_list/editProp',
+      type: 'user/editProp',
       key: 'showModal',
-      value: false
+      value
     });
+  }
+  handleOk(){
+    let {dispatch} = this.props;
+    dispatch({
+      type: 'user/editProp',
+      key: 'showModal',
+      value: true
+    });
+  }
+  renderUserActionModal(){
+    let {modalTitle, showModal} = this.props;
+    return (
+      <Modal
+        title={modalTitle}
+        visible={showModal}
+        onOk={this.handleOk}
+        onCancel={this.modalTotalShow.bind(this, false)}
+      ></Modal>
+    );
   }
   render(){
     return (
@@ -28,15 +46,14 @@ class UsersList extends React.Component {
         <Tabs
           className="top-tab"
           tabBarExtraContent={
-            <Link>
-              <Button type="primary">add user</Button>
-            </Link>
+            <Button onClick={this.modalTotalShow.bind(this, true)} type="primary">add</Button>
           }>
           <TabPane tab="User Management" key="list"></TabPane>
         </Tabs>
         <div className="list-content">
           <UserListTable {...this.props}/>
         </div>
+        {this.renderUserActionModal()}
       </div>
     );
   }

@@ -7,7 +7,8 @@ export default {
   namespace: 'user',
   state: {
     listData: [],
-    showModal: false
+    showModal: false,
+    modalTitle: 'create user'
   },
   subscriptions: {
     setup({dispatch, history}) {

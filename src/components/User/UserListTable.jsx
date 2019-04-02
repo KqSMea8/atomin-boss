@@ -60,7 +60,6 @@ export default class UserTable extends React.Component {
         columns={columns}
         scroll={{x:'100vh'}} 
         dataSource={listData}
-        bordered
       />
     );
   }
