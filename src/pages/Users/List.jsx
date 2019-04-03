@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'dva';
 import {Tabs, Button, Modal} from 'antd';
-import {UserListTable} from '../../components/User';
+import {UserListTable, UserForm} from '../../components/User';
 import './index.less';
 
 const TabPane = Tabs.TabPane;
@@ -22,11 +22,10 @@ class UsersList extends React.Component {
     });
   }
   handleOk(){
-    let {dispatch} = this.props;
-    dispatch({
-      type: 'user/editProp',
-      key: 'showModal',
-      value: true
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        window.console.log(values);
+      }
     });
   }
   renderUserActionModal(){
@@ -35,9 +34,11 @@ class UsersList extends React.Component {
       <Modal
         title={modalTitle}
         visible={showModal}
-        onOk={this.handleOk}
+        onOk={this.handleOk.bind(this)}
         onCancel={this.modalTotalShow.bind(this, false)}
-      ></Modal>
+      >
+        <UserForm {...this.props}/>
+      </Modal>
     );
   }
   render(){
@@ -58,7 +59,6 @@ class UsersList extends React.Component {
     );
   }
 }
-
 export default connect(function (state) {
   return {
     ...state.user,

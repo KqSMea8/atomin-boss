@@ -8,7 +8,13 @@ export default {
   state: {
     listData: [],
     showModal: false,
-    modalTitle: 'create user'
+    modalTitle: 'create user',
+    userForm: {
+      username: {
+        value: '',
+        message: ''
+      }
+    }
   },
   subscriptions: {
     setup({dispatch, history}) {
